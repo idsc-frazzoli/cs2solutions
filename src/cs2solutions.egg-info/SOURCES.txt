@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/cs2solutions/__init__.py
+src/cs2solutions/dynamics.py
+src/cs2solutions/intro.py
+src/cs2solutions/plot.py
+src/cs2solutions/test.py
+src/cs2solutions.egg-info/PKG-INFO
+src/cs2solutions.egg-info/SOURCES.txt
+src/cs2solutions.egg-info/dependency_links.txt
+src/cs2solutions.egg-info/requires.txt
+src/cs2solutions.egg-info/top_level.txt
