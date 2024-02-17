@@ -1,3 +1,5 @@
+#(c) 2024 ETH Zurich
+
 try:
     # Import the required python libraries
     from typing import Optional, List, Tuple

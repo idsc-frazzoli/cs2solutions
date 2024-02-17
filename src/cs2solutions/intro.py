@@ -1,3 +1,4 @@
+#(c) 2024 ETH Zurich
 
 try:
     import control as ct

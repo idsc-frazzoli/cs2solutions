@@ -7,7 +7,7 @@ packages = ["src/solutions"]
 
 [project]
 name = "cs2solutions"
-version = "0.0.6"
+version = "0.1.1"
 dependencies =[
     "control",
     "matplotlib"
@@ -20,7 +20,6 @@ authors = [
 ]
 maintainers = [
   { name="Kalle Laitinen", email="klaitinen@ethz.ch" },
-  { name="Dejan Milojevic", email="dejanmi@ethz.ch" },
   { name="Niclas Scheuer", email="nscheuer@ethz.ch" }
 ]
 description = "A package containing solutions for the CS2 lecture at ETH Zürich"
@@ -29,7 +28,7 @@ license = {file = "LICENSE"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
-    "Development Status :: 1 - Planning",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
 ]
 
