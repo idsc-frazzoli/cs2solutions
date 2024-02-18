@@ -287,4 +287,114 @@ def signal_to_code(t_dis: np.array,
       p = i
     
   return code
-  
+
+
+def butter_lowpass_filter(data: np.array,
+                          cutoff_frequency: float,
+                          sampling_frequency: float,
+                          order: int) -> np.array:
+    """
+    Apply a low-pass Butterworth filter to the input signal data.
+    
+    Parameters:
+    - ``data`` (np.array): 1D array of signal values.
+    - ``cutoff_frequency`` (float): Cutoff frequency of the filter.
+    - ``sampling_frequency`` (float): Sampling frequency of the data.
+    - ``order`` (int): Order of the low-pass transfer function.
+    
+    Returns:
+    - ``filtered_data`` (np.array): 1D array of filtered signal values.
+    """
+    nyquist = 0.5 * sampling_frequency
+    normal_cutoff = cutoff_frequency / nyquist
+    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    # Apply the filter to the signal.
+    filtered_data = lfilter(b, a, data)
+    return filtered_data
+
+
+def analog_digital_converter(t_cont: np.array,
+                             cont_signal: np.array,
+                             freq: float,
+                             t_or_s: str) -> np.array:
+    """
+    This function selectively picks the data points from the continuous data array to simulate signal sampling.
+    
+    Parameters:
+    - ``t_cont`` (np.array): Continues-Time Time Array.
+    - ``cont_signal`` (np.array): Continues-Time Signal Value Array.
+    - ``freq`` (float): ADC Sampling Frequency.
+    - ``t_or_s`` (str): Array generator selector. 't' to generate a Discrete-Time Time Array, 's' to generate a Discrete-Time Signal Value Array.
+    
+    Returns:
+    - ``t_dis`` OR ``dis_signal`` (np.array): Discrete-Time Time Array or Discrete-Time Signal Value Array, depending on the value of t_or_s.
+    """
+    
+    # Converting the Sampling frequency to the sampling period.
+    period = 1/freq
+ 
+    # Initialize an empty array to store the time data for discrete time.
+    t_dis = np.zeros(t_cont.size)
+    dis_signal = np.zeros(t_cont.size)
+ 
+    i = 0
+    p = 0
+    e = 0
+ 
+    # Check if the element index is still in the range of the time array.
+    while i < len(t_cont)-1:
+        
+        # Collect data from continuous time and write it to the sensor data array.
+        t_dis[e] = t_cont[i]
+        dis_signal[e] = cont_signal[i]
+        
+        # Move to the next element in the sensor data.
+        e += 1
+        
+        # Keep skipping the time till the next time to be sampled by the sensor.
+        # While checking if the element is still in range.
+        while (t_cont[i] < t_cont[p] + period) and (i < len(t_cont)-1):
+            i += 1
+        # We skipped a period in continuous time, now it is time to collect data.
+        p = i
+    
+    # If dis_time wanted, return dis_time array.
+    if t_or_s == "t":
+        return t_dis   
+    
+    # If dis_signal wanted, return dis_signal array
+    if t_or_s == "s":
+        return dis_signal
+ 
+    return None
+    
+
+def data_normalization_sol(data_raw: np.array,
+                           min: float,
+                           normalization: float,
+                           idle: float) -> np.array:
+    """
+    Normalize the input data array to discrete values of 1 or 0.
+    If the signal value is higher than or equal to the minimum threshold, it is normalized to the normalization value.
+    If the signal value is lower than the minimum threshold, it is normalized to the idle value.
+    
+    Parameters:
+    - ``data_raw`` (np.array): 1D array of raw data points.
+    - ``min`` (float): Minimum threshold for normalization.
+    - ``normalization`` (float): Value to normalize to when the signal value is higher than or equal to the minimum threshold.
+    - ``idle`` (float): Value to normalize to when the signal value is lower than the minimum threshold.
+    
+    Returns:
+    - ``data_norm`` (np.array): 1D array of filtered data points with the same size as the raw data array.
+    """
+    # Create an array to save the filtered data with the same size as the raw data array.
+    data_norm = np.zeros(data_raw.size)
+    
+    # Check each value and normalize or set it to the idle value in the filtered data array.
+    for i in range(data_raw.size - 1):
+        if min <= data_raw[i]:
+            data_norm[i] = normalization
+        else:
+            data_norm[i] = idle
+        i += 1 
+    return data_norm
