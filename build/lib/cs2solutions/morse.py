@@ -13,34 +13,6 @@ except ImportError as e:
     print(f"Please install the required packages using the command '!pip install control numpy matplotlib scipy'")
 
 
-# Visualize the Noise signal in Morse-Transmission
-def plot_noise_signal(t_cont: np.array, rand_noise: np.array,
-            t_cont_start: int, t_cont_end: int) -> None:
-  """
-  Plot the continuous noise signal.
-  
-  Parameters:
-   - ``t_cont`` (np.array): Array of time values for the continuous signal.
-   - ``rand_noise`` (np.array): Array of amplitude values for the continuous noise signal.
-   - ``t_cont_start`` (int): Start time for the x-axis.
-   - ``t_cont_end`` (int): End time for the x-axis.
-
-  Returns:
-   - None
-  """
-  
-  plt.figure(figsize=(5, 3))
-  plt.title("(Continuous) Noise")
-  plt.axhline(y=0, color='g', linestyle='-')
-  plt.plot(t_cont, rand_noise)
-  plt.xticks(np.arange(t_cont_start, t_cont_end))
-  plt.xlabel('Time (s)')
-  plt.ylabel('Amplitude')
-  plt.show()
-    
-  return None
-
-
 # Define the morse code dictionary.
 MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
                     'C':'-.-.', 'D':'-..', 'E':'.',
