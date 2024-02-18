@@ -1,1 +1,1 @@
-__all__ = ["test", "intro", "duckiebot", "plot"]
+__all__ = ["test", "intro", "discretization", "morse", "duckiebot", "plot"]

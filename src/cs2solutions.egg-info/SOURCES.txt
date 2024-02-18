@@ -2,8 +2,10 @@ LICENSE
 README.md
 pyproject.toml
 src/cs2solutions/__init__.py
+src/cs2solutions/discretization.py
 src/cs2solutions/duckiebot.py
 src/cs2solutions/intro.py
+src/cs2solutions/morse.py
 src/cs2solutions/plot.py
 src/cs2solutions/test.py
 src/cs2solutions.egg-info/PKG-INFO
