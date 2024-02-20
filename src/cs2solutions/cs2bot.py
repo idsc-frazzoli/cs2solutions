@@ -35,10 +35,14 @@ def sol_get_xdot(t: float, x: np.array, u: np.array, params: dict) -> np.array:
         omega     # thdot = w
     ])
 
-def assert_almost_equal(actual, expected, tolerance=1e-5):
-    assert np.all(np.abs(actual - expected) < tolerance), f"Expected {expected}, but got {actual}"
+def assert_almost_equal(actual, expected, tolerance=1e-5) -> bool:
+    try:
+        almost_equal = np.all(np.abs(actual - expected) < tolerance)
+        return almost_equal
+    except Exception:
+        return False
 
-def test_xdot(student_sol, actual_sol, tolerance: float = 1e-5) -> booL:
+def test_xdot(student_sol, actual_sol, tolerance: float = 1e-5) -> bool:
     """
     Tests the student solution for get_xdot.
 
@@ -58,7 +62,7 @@ def test_xdot(student_sol, actual_sol, tolerance: float = 1e-5) -> booL:
     u = np.array([1.0, 0.1])        # input [v, omega]
     result = student_sol(0.0, x, u, params)
     solution = actual_sol(0.0, x, u, params)
-    print("Test failed: is_system_stable should return a boolean value." if result is None else "")
+    print("Test failed: get_xdot should a np.array" if result is None else "")
     print("Student's result: ", result)
     print("Expected result: ", solution)
     passed_tests += 1 if assert_almost_equal(result, solution, tolerance) else 0
@@ -97,7 +101,7 @@ def test_xdot(student_sol, actual_sol, tolerance: float = 1e-5) -> booL:
     params = {'max_omega': 0.05}
     x = np.array([1.0, 2.0, np.pi/4])
     u = np.array([1.0, 0.1])
-    result = get_xdot(0.0, x, u, params)
+    result = student_sol(0.0, x, u, params)
     solution = np.array([np.cos(np.pi/4), np.sin(np.pi/4), 0.05])
     print("Student's result: ", result)
     print("Expected result: ", solution)
@@ -124,7 +128,7 @@ def sol_get_y(t: float, x: np.array, u: np.array, params: dict) -> np.array:
     return x[0:2]
 
 
-def test_y(student_sol, actual_sol, tolerance: float = 1e-5) -> booL:
+def test_y(student_sol, actual_sol, tolerance: float = 1e-5) -> bool:
     """
     Tests the student solution for get_y.
 
@@ -144,7 +148,7 @@ def test_y(student_sol, actual_sol, tolerance: float = 1e-5) -> booL:
     u = np.array([1.0, 0.1])        # input [v, omega]
     result = student_sol(0.0, x, u, params)
     solution = actual_sol(0.0, x, u, params)
-    print("Test failed: is_system_stable should return a boolean value." if result is None else "")
+    print("Test failed: get_y should return a np.array" if result is None else "")
     print("Student's result: ", result)
     print("Expected result: ", solution)
     passed_tests += 1 if assert_almost_equal(result, solution, tolerance) else 0

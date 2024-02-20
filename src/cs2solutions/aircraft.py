@@ -36,7 +36,7 @@ def sol_aircraft_state_space() -> ct.StateSpace:
         [0]
     ])
 
-    C_sol = np.array([[0, 0, 1, 0]])
+    C_sol = np.array([[0, 0, 0, 1]])
 
     D_sol = np.array([[0]])
 
