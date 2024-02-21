@@ -38,7 +38,7 @@ def sol_create_transfer_function() -> ct.TransferFunction:
     tf = ct.TransferFunction(numerator_coeffs, denominator_coeffs)
     return tf
 
-def test_create_transfer_function(student_sol: callable, sol_tf: callable, shouldprint: bool = True) -> bool:
+def test_create_transfer_function(student_sol, sol_tf, shouldprint: bool = True) -> bool:
     """
     Test function to compare the student's transfer function with the solution transfer function.
 
@@ -70,7 +70,7 @@ def test_create_transfer_function(student_sol: callable, sol_tf: callable, shoul
     return np.array_equal(student_tf.num, sol_tf.num) and np.array_equal(student_tf.den, sol_tf.den)
 
 
-def sol_plot_step_response(tf: ct.TransferFunction) -> None:
+def sol_plot_step_response(tf: ct.TransferFunction):
     """
     Solution: Plot the step response of the given transfer function.
 
@@ -97,9 +97,7 @@ def sol_plot_step_response(tf: ct.TransferFunction) -> None:
     plt.grid(True)
     plt.show()
 
-    return None
-
-def test_plot_step_response(student_plot: callable, sol_plot: callable, tf: ct.TransferFunction, shouldprint: bool = True) -> None:
+def test_plot_step_response(student_plot, sol_plot, tf: ct.TransferFunction, shouldprint: bool = True) -> bool:
     """
     Test function to compare the student's step response plot with the solution step response plot.
 
@@ -123,10 +121,10 @@ def test_plot_step_response(student_plot: callable, sol_plot: callable, tf: ct.T
     print("Solution plot:") if shouldprint else None
     sol_plot(sol_create_transfer_function())
 
-    return None
+    pass
 
 
-def sol_bode_plot(tf: ct.TransferFunction) -> None:
+def sol_bode_plot(tf: ct.TransferFunction):
     """
     Solution: Plot the Bode magnitude and phase plots for a given transfer function.
 
@@ -139,7 +137,7 @@ def sol_bode_plot(tf: ct.TransferFunction) -> None:
     assert isinstance(tf, ct.TransferFunction), "The input should be an instance of the TransferFunction class."
 
     mag, phase, omega = ct.bode_plot(tf)
-    return None
+    pass
 
 
 def sol_get_filter_tf(omega_c: float, is_verbose : bool = False) -> ct.TransferFunction:
@@ -167,7 +165,7 @@ def sol_get_filter_tf(omega_c: float, is_verbose : bool = False) -> ct.TransferF
     tf = ct.TransferFunction(numerator_coeffs, denominator_coeffs)
     return tf
 
-def test_create_filter_tf(student_filter: callable, sol_filter: callable, omega_c: float, shouldprint: bool = True) -> bool:
+def test_create_filter_tf(student_filter, sol_filter, omega_c: float, shouldprint: bool = True) -> bool:
     """
     Test the create_filter_tf function.
 
@@ -191,7 +189,7 @@ def test_create_filter_tf(student_filter: callable, sol_filter: callable, omega_
 
 #test function definitions
 
-def test(answer: callable, solution: callable, is_verbose: bool = True) -> None:
+def test(answer, solution, is_verbose: bool = True):
     #this is a very simple test to check correct inputs and plotting
     if(is_verbose):
         print(f"Your answer: {answer()}")
@@ -201,5 +199,5 @@ def test(answer: callable, solution: callable, is_verbose: bool = True) -> None:
         answer()
         print("Expected answer: ")
         solution()
-    return None
+    pass
        
