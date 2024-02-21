@@ -43,7 +43,7 @@ def sol_aircraft_state_space() -> ct.StateSpace:
     return ct.StateSpace(A_sol, B_sol, C_sol, D_sol)
 
 
-def test_aircraft_state_space(student_sol, actual_sol, shouldprint: bool = True) -> bool:
+def test_aircraft_state_space(student_sol: callable, actual_sol: callable, shouldprint: bool = True) -> bool:
     """
     Test function to compare the student's state space model with the solution state space model.
 
@@ -96,7 +96,7 @@ def sol_is_system_stable(sys: ct.StateSpace) -> bool:
     return np.all(np.linalg.eigvals(sys.A) < 0)
 
 
-def test_is_system_stable(student_sol, actual_sol, shouldprint: bool = True) -> bool:
+def test_is_system_stable(student_sol: callable, actual_sol: callable, shouldprint: bool = True) -> bool:
     """
     Test function to compare the student's stability check with the solution stability check.
 

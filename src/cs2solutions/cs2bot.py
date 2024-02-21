@@ -35,14 +35,14 @@ def sol_get_xdot(t: float, x: np.array, u: np.array, params: dict) -> np.array:
         omega     # thdot = w
     ])
 
-def assert_almost_equal(actual, expected, tolerance=1e-5) -> bool:
+def assert_almost_equal(actual: float, expected: float, tolerance=1e-5) -> bool:
     try:
         almost_equal = np.all(np.abs(actual - expected) < tolerance)
         return almost_equal
     except Exception:
         return False
 
-def test_xdot(student_sol, actual_sol, tolerance: float = 1e-5) -> bool:
+def test_xdot(student_sol: callable, actual_sol: callable, tolerance: float = 1e-5) -> bool:
     """
     Tests the student solution for get_xdot.
 
@@ -128,7 +128,7 @@ def sol_get_y(t: float, x: np.array, u: np.array, params: dict) -> np.array:
     return x[0:2]
 
 
-def test_y(student_sol, actual_sol, tolerance: float = 1e-5) -> bool:
+def test_y(student_sol: callable, actual_sol: callable, tolerance: float = 1e-5) -> bool:
     """
     Tests the student solution for get_y.
 
