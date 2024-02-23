@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cs2solutions
-Version: 0.2.2
+Version: 0.2.5
 Summary: A package containing solutions for the CS2 lecture at ETH Zürich
 Author-email: Kalle Laitinen <klaitinen@ethz.ch>, Dejan Milojevic <dejanmi@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
 Maintainer-email: Kalle Laitinen <klaitinen@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
@@ -679,11 +679,14 @@ License:                     GNU GENERAL PUBLIC LICENSE
         Public License instead of this License.  But first, please read
         <https://www.gnu.org/licenses/why-not-lgpl.html>.
         
-Project-URL: Homepage, https://ethz.ch
+Project-URL: Homepage, https://idsc.ethz.ch/education/lectures/control-systems-ii.html
+Project-URL: Repository, https://github.com/idsc-frazzoli/cs2solutions
+Project-URL: Notebooks, https://github.com/idsc-frazzoli/CS2-2024-notebooks
 Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
-Classifier: Development Status :: 4 - Beta
+Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
 Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
