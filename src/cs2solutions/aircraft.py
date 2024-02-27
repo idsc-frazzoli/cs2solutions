@@ -65,7 +65,7 @@ def test_aircraft_state_space(student_sol: callable, actual_sol: callable, shoul
     sol_model = actual_sol()
 
     # Check if the student's state space model is an instance of the StateSpace class
-    assert isinstance(student_model, type(None)), f"Please make sure to return a StateSpace object. Got {type(student_model)} instead."
+    assert not isinstance(student_model, type(None)), f"Please make sure to return a StateSpace object. Got {type(student_model)} instead."
     assert isinstance(student_model, ct.StateSpace), f"Expected a StateSpace object, but got {type(student_model)}"
 
     # Check if the student's state space model is equal to the solution state space model
