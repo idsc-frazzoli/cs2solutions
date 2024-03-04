@@ -391,10 +391,9 @@ def data_normalization_sol(data_raw: np.array,
     data_norm = np.zeros(data_raw.size)
     
     # Check each value and normalize or set it to the idle value in the filtered data array.
-    for i in range(data_raw.size - 1):
+    for i in range(data_raw.size):
         if min <= data_raw[i]:
             data_norm[i] = normalization
         else:
             data_norm[i] = idle
-        i += 1 
     return data_norm

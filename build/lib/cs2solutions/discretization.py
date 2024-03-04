@@ -108,34 +108,6 @@ def plot_step_responses(t_stable_cont: np.array, y_stable_cont: np.array,
 
     return None
     
-    
-# Visualize the Noise signal in Morse-Transmission
-def plot_noise_signal(t_cont: np.array, rand_noise: np.array,
-            t_cont_start: int, t_cont_end: int) -> None:
-  """
-  Plot the continuous noise signal.
-  
-  Parameters:
-   - ``t_cont`` (np.array): Array of time values for the continuous signal.
-   - ``rand_noise`` (np.array): Array of amplitude values for the continuous noise signal.
-   - ``t_cont_start`` (int): Start time for the x-axis.
-   - ``t_cont_end`` (int): End time for the x-axis.
-
-  Returns:
-   - None
-  """
-  
-  plt.figure(figsize=(5, 3))
-  plt.title("(Continuous) Noise")
-  plt.axhline(y=0, color='g', linestyle='-')
-  plt.plot(t_cont, rand_noise)
-  plt.xticks(np.arange(t_cont_start, t_cont_end))
-  plt.xlabel('Time (s)')
-  plt.ylabel('Amplitude')
-  plt.show()
-    
-  return None
-    
 
 def plot_disc_stepresponses(t_cont: np.array, y_cont: np.array,
               t_eulerf: np.array, y_eulerf: np.array,
