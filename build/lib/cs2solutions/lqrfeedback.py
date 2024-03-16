@@ -112,7 +112,6 @@ def sol_control_matrix2(A: np.ndarray, B: np.ndarray) -> np.ndarray:
 
     return R
 
-
 def sol_2x2_ackermann(A: np.ndarray, B: np.ndarray, C:np.ndarray, p_1: float, p_2: float) -> Tuple[np.ndarray, np.ndarray, float, np.ndarray, np.ndarray]:
     """
     Calculates and outputs all steps of the Ackermann formula in one go. Only works for 2x2 matrices.
@@ -168,6 +167,41 @@ def sol_2x2_ackermann(A: np.ndarray, B: np.ndarray, C:np.ndarray, p_1: float, p_
 
     return p_cl, K, k_r, A_cl, B_cl
 
+def sol_2x2_acker_estimation(A: np.ndarray, C: np.ndarray, poles: List[float]) -> np.ndarray:
+    """
+    Calculates the observer gain matrix L for a 2x2 system.
+
+    Parameters:
+    - ``A`` (np.array): The state matrix.
+    - ``C`` (np.array): The output matrix.
+    - ``poles`` (List[float]): The poles of the observer.
+
+    Returns:
+    - ``L```(np.array): The observer gain matrix.
+    """
+    # Safety
+    assert isinstance(A, np.ndarray), "A must be a NumPy array"
+    assert isinstance(C, np.ndarray), "C must be a NumPy array"
+    assert A.shape[0] == A.shape[1], "A must be a square matrix"
+    assert A.shape[0] == C.shape[1], "A and C must have compatible dimensions"
+    assert A.shape[0] == 2, "A must have dimensions larger than 0"
+    assert len(poles) == 2, "poles must be a list of length 2"
+    N = 2  # Number of states
+
+    # Calculate the observer gain matrix L
+    CA = C @ A
+    O = np.concatenate((C, CA), axis=0)
+    O_inv = np.linalg.inv(O)
+    gamma = O_inv @ np.array([[0, 1]]).T
+
+    p_1 = poles[0]*(-1)
+    p_2 = poles[1]*(-1)
+    ab = p_1 + p_2
+    b = p_1*p_2
+    p_cl = A @ A + ab*A + b*np.identity(2)
+
+    L = p_cl @ gamma
+    return L
 
 def sol_check_pos_def_sym(A: np.ndarray) -> bool:
     """
