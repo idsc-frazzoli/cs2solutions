@@ -54,7 +54,7 @@ def plot_track(x_coord_ref: np.array, y_coord_ref: np.array,
     plt.subplot(2, 2, 2)
     plt.plot(t, y_coord_ref)
     if y_ctr is not None:
-        plt.plot(t_curvy, y_ctr, 'r')
+        plt.plot(t, y_ctr, 'r')
         plt.legend(['reference', 'controller'])
     else:
         plt.legend(['reference'])
@@ -64,7 +64,7 @@ def plot_track(x_coord_ref: np.array, y_coord_ref: np.array,
     plt.subplot(2, 2, 4)
     plt.plot(t, w_curvy)
     if w_ctr is not None:
-        plt.plot(t_curvy, w_ctr, 'r')
+        plt.plot(t, w_ctr, 'r')
         plt.legend(['reference', 'controller'])
     else:
         plt.legend(['reference'])
@@ -119,6 +119,93 @@ def plot_track_multiple_controller(x_coord_ref: np.array, y_coord_ref: np.array,
     for i in range(number_ctr):
         plt.plot(t, w_ctr[i], linewidth=1)
         legend_list.append(ctr_name[i])
+    plt.legend(legend_list)
+    plt.ylabel('$\\omega$ [rad/s]')
+    plt.xlabel('Time t [sec]')
+    plt.tight_layout()
+
+# Updated plot_track_multiple_controller function specifically for the notebook "CS2-2024-unicycle-state-estimation.ipynb"
+def plot_track_multiple_controller2(x_coord_ref: np.array, y_coord_ref: np.array,
+               theta_ref: np.array, t: List[np.array],
+               w_curvy: np.array,
+               y_ctr: List[np.array],
+               w_ctr: Optional[np.array]) -> None:
+    # Configure matplotlib plots to be a bit bigger and optimize layout
+    number_ctr = len(t)
+    plt.figure(figsize=[14, 6])
+    # Plot the resulting trajectory (and some road boundaries)
+
+    plt.subplot(1, 4, 2)
+    plt.plot(y_coord_ref, x_coord_ref)
+    plt.legend(['reference'])
+    legend_list = ['reference']
+    for i in range(number_ctr):
+      plt.plot(y_ctr[i], x_coord_ref, linewidth=1)
+      if number_ctr == 4:
+        if i == 0:
+          legend_list.append('aggressive_controller')
+        elif i == 1:
+          legend_list.append('easy_controller')
+        elif i == 2:
+          legend_list.append('complex_1_controller')
+        elif i == 3:
+          legend_list.append('complex_2_controller')
+        else:
+          legend_list.append(f'controller_{i-4}')
+      else:
+        legend_list.append(f'controller_{i+1}')
+
+    plt.legend(legend_list, loc='upper left')
+    plt.plot(y_coord_ref - 0.9/np.cos(theta_ref), x_coord_ref, 'k-', linewidth=1)
+    plt.plot(y_coord_ref - 0.3/np.cos(theta_ref), x_coord_ref, 'k--', linewidth=1)
+    plt.plot(y_coord_ref + 0.3/np.cos(theta_ref), x_coord_ref, 'k-', linewidth=1)
+
+
+
+    plt.xlabel('y [m]')
+    plt.ylabel('x [m]');
+    plt.axis('Equal')
+
+    # Plot the lateral position
+    plt.subplot(2, 2, 2)
+    plt.plot(t[0], y_coord_ref)
+    legend_list = ['reference']
+    for i in range(number_ctr):
+      plt.plot(t[i], y_ctr[i], linewidth=1)
+      if number_ctr == 4:
+        if i == 0:
+          legend_list.append('aggressive_controller')
+        elif i == 1:
+          legend_list.append('easy_controller')
+        elif i == 2:
+          legend_list.append('complex_1_controller')
+        elif i == 3:
+          legend_list.append('complex_2_controller')
+        else:
+          legend_list.append(f'controller_{i-4}')
+      else:
+        legend_list.append(f'controller_{i+1}')
+    plt.legend(legend_list)
+    plt.ylabel('Lateral position $y$ [m]')
+
+    # Plot the control input
+    plt.subplot(2, 2, 4)
+    plt.plot(t[0], w_curvy)
+    for i in range(number_ctr):
+      plt.plot(t[i], y_ctr[i], linewidth=1)
+      if number_ctr == 4:
+        if i == 0:
+          legend_list.append('aggressive_controller')
+        elif i == 1:
+          legend_list.append('easy_controller')
+        elif i == 2:
+          legend_list.append('complex_1_controller')
+        elif i == 3:
+          legend_list.append('complex_2_controller')
+        else:
+          legend_list.append(f'controller_{i-4}')
+      else:
+        legend_list.append(f'controller_{i+1}')
     plt.legend(legend_list)
     plt.ylabel('$\\omega$ [rad/s]')
     plt.xlabel('Time t [sec]')

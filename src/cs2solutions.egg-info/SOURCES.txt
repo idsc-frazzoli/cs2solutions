@@ -3,6 +3,7 @@ README.md
 pyproject.toml
 src/cs2solutions/__init__.py
 src/cs2solutions/aircraft.py
+src/cs2solutions/cs.py
 src/cs2solutions/cs2bot.py
 src/cs2solutions/decomp.py
 src/cs2solutions/discretization.py

@@ -65,7 +65,7 @@ def test_aircraft_state_space(student_sol: callable, actual_sol: callable, shoul
     sol_model = actual_sol()
 
     # Check if the student's state space model is an instance of the StateSpace class
-    assert isinstance(student_model, type(None)), f"Please make sure to return a StateSpace object. Got {type(student_model)} instead."
+    assert not isinstance(student_model, type(None)), f"Please make sure to return a StateSpace object. Got {type(student_model)} instead."
     assert isinstance(student_model, ct.StateSpace), f"Expected a StateSpace object, but got {type(student_model)}"
 
     # Check if the student's state space model is equal to the solution state space model
@@ -129,14 +129,14 @@ def test_is_system_stable(student_sol: callable, actual_sol: callable, shouldpri
 
     # Test 2: Marginally stable system
     sys_marginally_stable = ct.StateSpace(np.array([[0, 1], [-1, 0]]), np.array([[1], [0]]), np.array([[0, 1]]), np.array([[0]]))
-    result = student_sol(sys_unstable)
+    result = student_sol(sys_marginally_stable)
     print("Student's result: ", result)
     print("Expected result: ", actual_sol(sys_marginally_stable))
     passed_tests += 1 if result == actual_sol(sys_marginally_stable) else 0
 
     # Test 3: Stable system
     sys_stable = ct.StateSpace(np.array([[-0.5, 0], [0, -1]]), np.array([[1], [0]]), np.array([[0, 1]]), np.array([[0]]))
-    result = student_sol(sys_unstable)
+    result = student_sol(sys_stable)
     print("Student's result: ", result)
     print("Expected result: ", actual_sol(sys_stable))
     passed_tests += 1 if result == actual_sol(sys_stable) else 0
@@ -144,6 +144,7 @@ def test_is_system_stable(student_sol: callable, actual_sol: callable, shouldpri
     # Test 4: Check aircraft stability
     sys_aircraft = sol_aircraft_state_space()
     result = student_sol(sys_aircraft)
+    print("Student's result: ", result)
     print("Expected result: ", actual_sol(sys_aircraft))
     passed_tests += 1 if result == actual_sol(sys_aircraft) else 0
 
