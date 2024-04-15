@@ -9,6 +9,7 @@ src/cs2solutions/decomp.py
 src/cs2solutions/discretization.py
 src/cs2solutions/duckiebot.py
 src/cs2solutions/intro.py
+src/cs2solutions/intromimo.py
 src/cs2solutions/lqrfeedback.py
 src/cs2solutions/morse.py
 src/cs2solutions/plot.py
