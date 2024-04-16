@@ -223,11 +223,13 @@ def test_controllable(student_sol: callable, actual_sol: callable, shouldprint: 
     print("Student solution:")
     try:
         student1 = student_sol(A1, B1)
+        print(student1)
     except Exception as e:
         print("Error in controllable:", e)
         student1 = None
     print("Master solution:")
     solution1 = actual_sol(A1, B1)
+    print(solution1)
     passed_tests += 1 if student1 == solution1 else 0
 
     # Controllable system
@@ -236,11 +238,13 @@ def test_controllable(student_sol: callable, actual_sol: callable, shouldprint: 
     print("Student solution:")
     try:
         student2 = student_sol(A2, B2)
+        print(student2)
     except Exception as e:
         print("Error in controllable:", e)
         student2 = None
     print("Master solution:")
     solution2 = actual_sol(A2, B2)
+    print(solution2)
     passed_tests += 1 if student2 == solution2 else 0
 
     print("Passed tests:", passed_tests, " out of 2")
@@ -267,11 +271,13 @@ def test_observable(student_sol: callable, actual_sol: callable, shouldprint: bo
     print("Student solution:")
     try:
         student1 = student_sol(A1, C1)
+        print(student1)
     except Exception as e:
         print("Error in observable:", e)
         student1 = None
     print("Master solution:")
     solution1 = actual_sol(A1, C1)
+    print(solution1)
     passed_tests += 1 if student1 == solution1 else 0
 
     # Unobservable system
@@ -280,11 +286,13 @@ def test_observable(student_sol: callable, actual_sol: callable, shouldprint: bo
     print("Student solution:")
     try:
         student2 = student_sol(A2, C2)
+        print(student2)
     except Exception as e:
         print("Error in observable:", e)
         student2 = None
     print("Master solution:")
     solution2 = actual_sol(A2, C2)
+    print(solution2)
     passed_tests += 1 if student2 == solution2 else 0
 
     print("Passed tests:", passed_tests, " out of 2")
