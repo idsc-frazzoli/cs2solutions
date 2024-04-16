@@ -2,3 +2,4 @@ control
 matplotlib
 numpy
 scipy
+sympy

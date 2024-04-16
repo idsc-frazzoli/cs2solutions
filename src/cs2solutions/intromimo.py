@@ -40,7 +40,6 @@ def test_sys_matrices(student_sol: callable, master_sol: callable) -> bool:
     Parameters:
     - ``student_sol`` (function): A function that returns the student's solution.
     - ``master_sol`` (function): A function that returns the master solution.
-    - ``shouldprint`` (bool): A boolean indicating whether to print the matrices. Default is True.
 
     Returns:
     - bool: A boolean indicating if the student solution is correct.
@@ -60,7 +59,7 @@ def test_sys_matrices(student_sol: callable, master_sol: callable) -> bool:
     return True
 
 
-def sol_poles(A_: np.ndarray, B_: np.ndarray, C_: np.array, D_=np.array) -> int:
+def sol_poles(A_: np.ndarray, B_: np.ndarray, C_: np.array, D_=np.array) -> np.array:
     """
     Determine the poles the system.
 
@@ -71,14 +70,14 @@ def sol_poles(A_: np.ndarray, B_: np.ndarray, C_: np.array, D_=np.array) -> int:
     - ``D_`` (np.ndarray): The D matrix of the system.
 
     Returns:
-    - int: The number of inputs for the system.
+    - np.array: The poles of the system.
     """
     return ct.poles(ct.StateSpace(A_, B_, C_, D_))
 
 
 def test_poles(student_sol: callable, master_sol: callable) -> bool:
     """
-    Unit tests for checking the implementation of calc_symb_sol(). This function should symbolically calculate the MIMO transfer function given A, B, C, and D matrices.
+    Unit tests for checking the implementation of sol_poles. This function should calculate the poles of the system.
     """
 
     passed_tests = 0
@@ -93,7 +92,7 @@ def test_poles(student_sol: callable, master_sol: callable) -> bool:
         return False
     master = master_sol(A1, B1, C1, D1)
     if not np.array_equal(student, master, equal_nan=True):
-        print("Test failed: The transfer function is incorrect.")
+        print("Test failed: The poles are incorrect.")
         print("Student's result: ", student)
         print("Expected result: ", master)
     else:
@@ -110,7 +109,7 @@ def test_poles(student_sol: callable, master_sol: callable) -> bool:
         return False
     master = master_sol(A2, B2, C2, D2)
     if not np.array_equal(student, master, equal_nan=True):
-        print("Test failed: The transfer function is incorrect.")
+        print("Test failed: The poles are incorrect.")
         print("Student's result: ", student)
         print("Expected result: ", master)
     else:
@@ -127,7 +126,7 @@ def test_poles(student_sol: callable, master_sol: callable) -> bool:
         return False
     master = master_sol(A3, B3, C3, D3)
     if not np.array_equal(student, master, equal_nan=True):
-        print("Test failed: The transfer function is incorrect.")
+        print("Test failed: The poles are incorrect.")
         print("Student's result: ", student)
         print("Expected result: ", master)
     else:
@@ -142,10 +141,7 @@ def sol_num_inputs(B_: np.ndarray) -> int:
     Determine the number of inputs for the system.
 
     Parameters:
-    - ``A_`` (np.ndarray): The A matrix of the system.
     - ``B_`` (np.ndarray): The B matrix of the system.
-    - ``C_`` (np.ndarray): The C matrix of the system.
-    - ``D_`` (np.ndarray): The D matrix of the system.
 
     Returns:
     - int: The number of inputs for the system.
@@ -158,10 +154,7 @@ def sol_num_outputs(C_: np.ndarray) -> int:
     Determine the number of outputs for the system.
 
     Parameters:
-    - ``A_`` (np.ndarray): The A matrix of the system.
-    - ``B_`` (np.ndarray): The B matrix of the system.
     - ``C_`` (np.ndarray): The C matrix of the system.
-    - ``D_`` (np.ndarray): The D matrix of the system.
 
     Returns:
     - int: The number of outputs for the system.
@@ -179,7 +172,6 @@ def test_num_inputs_outputs(student_num_inputs: callable, student_num_outputs: c
     - ``student_num_outputs`` (function): A function that returns the student's solution for num_outputs().
     - ``master_num_inputs`` (function): A function that returns the master solution for num_inputs().
     - ``master_num_outputs`` (function): A function that returns the master solution for num_outputs().
-    - ``shouldprint`` (bool): A boolean indicating whether to print the results. Default is True.
 
     Returns:
     - bool: A boolean indicating if the student solution is correct.
@@ -325,7 +317,7 @@ def sol_calc_tf_ctrl(A: np.ndarray, B: np.ndarray, C: np.ndarray, D: np.ndarray,
     return transferfunction
 
 
-def test_calc_tf_ctrl(student_sol: callable, master_sol: callable, shouldprint: bool = True) -> bool:
+def test_calc_tf_ctrl(student_sol: callable, master_sol: callable) -> bool:
     """
     Unit tests for checking the implementation of calc_tf_ctrl(). This function should calculate the MIMO transfer function given A, B, C, and D matrices.
     """
