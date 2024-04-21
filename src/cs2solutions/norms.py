@@ -401,12 +401,12 @@ def sol_maxinputdir(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
 
     return input_dir, max_singular_value, output_dir
 
-def subplot_svd(A: np.ndarray, i: np.ndarray, j: np.ndarray, k: np.ndarray, dir: np.ndarray = None) -> None:
-    fig1 = plt.figure(figsize=(5, 5))
+def subplot_svd(A: np.ndarray, i: np.ndarray, j: np.ndarray, k: np.ndarray, v1: np.ndarray, v2: np.ndarray, v3: np.ndarray, dir: np.ndarray = None) -> None:
+    fig1 = plt.figure(figsize=(3, 3))
     ax1 = fig1.add_subplot(111, projection='3d')
-    ax1.quiver(0, 0, 0, i[0], i[1], i[2], color='k', label='i (1,0,0)')
-    ax1.quiver(0, 0, 0, j[0], j[1], j[2], color='k', label='j (0,1,0)')
-    ax1.quiver(0, 0, 0, k[0], k[1], k[2], color='k', label='k (0,0,1)')
+    ax1.quiver(0, 0, 0, v1[0], v1[1], v1[2], color='k', label='i (1,0,0)')
+    ax1.quiver(0, 0, 0, v2[0], v2[1], v2[2], color='k', label='j (0,1,0)')
+    ax1.quiver(0, 0, 0, v3[0], v3[1], v3[2], color='k', label='k (0,0,1)')
     if dir is not None:
         ax1.quiver(0, 0, 0, dir[0], dir[1], dir[2], color='r', label='Input direction')
 
@@ -446,27 +446,31 @@ def plot_svd3x3(A: np.ndarray) -> None:
         raise ValueError("Input must be a 2D numpy array")
     
     U, S, Vt = np.linalg.svd(A)
-    input_dir, max_singular_value, output_dir = sol_maxinputdir(A)
+    S = np.diag(S)
+    input_dir, max_singular_value, output_dir = maxinputdir(A)
 
-    i = np.array([1, 0, 0])
-    j = np.array([0, 1, 0])
-    k = np.array([0, 0, 1])
-    subplot_svd(A, i, j, k, input_dir)
+    i1 = np.array([1, 0, 0])
+    j1 = np.array([0, 1, 0])
+    k1 = np.array([0, 0, 1])
+    subplot_svd(A, i1, j1, k1, i1, j1, k1, input_dir)
 
-    i = Vt@i
-    j = Vt@j
-    k = Vt@k
-    subplot_svd(A, i, j, k)
+    i2 = Vt@i1
+    j2 = Vt@j1
+    k2 = Vt@k1
+    subplot_svd(A, i2, j2, k2, i2, j2, k2, Vt@input_dir)
 
-    print(j)
-    i *= S[0]
-    j *= S[1]
-    k *= S[2]
-    print(S[1])
-    print(j)
-    subplot_svd(A, i, j, k)
+    i3 = S[0] * i1
+    j3 = S[1] * j1
+    k3 = S[2] * k1
+    v1 = S@Vt@i1
+    v2 = S@Vt@j1
+    v3 = S@Vt@k1
+    subplot_svd(A, i3, j3, k3, v1, v2, v3, S@Vt@input_dir)
 
-    i = U@i
-    j = U@j
-    k = U@k
-    subplot_svd(A, i, j, k, output_dir)
+    i4 = U@i3
+    j4 = U@j3
+    k4 = U@k3
+    output_dir = U@S@Vt@input_dir
+    subplot_svd(A, i4, j4, k4, U@v1, U@v2, U@v3, output_dir)
+
+    subplot_svd(A, A@i1, A@j1, A@k1, A@i1, A@j1, A@k1, A@input_dir)
