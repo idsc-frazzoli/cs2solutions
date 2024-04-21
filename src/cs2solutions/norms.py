@@ -447,7 +447,7 @@ def plot_svd3x3(A: np.ndarray) -> None:
     
     U, S, Vt = np.linalg.svd(A)
     S = np.diag(S)
-    input_dir, max_singular_value, output_dir = maxinputdir(A)
+    input_dir, max_singular_value, output_dir = sol_maxinputdir(A)
 
     i1 = np.array([1, 0, 0])
     j1 = np.array([0, 1, 0])
