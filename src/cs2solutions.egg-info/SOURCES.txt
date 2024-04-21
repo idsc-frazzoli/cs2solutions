@@ -13,6 +13,7 @@ src/cs2solutions/intromimo.py
 src/cs2solutions/lqg.py
 src/cs2solutions/lqrfeedback.py
 src/cs2solutions/morse.py
+src/cs2solutions/norms.py
 src/cs2solutions/plot.py
 src/cs2solutions/test.py
 src/cs2solutions.egg-info/PKG-INFO
