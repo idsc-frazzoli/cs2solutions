@@ -78,9 +78,9 @@ def sol_vectorPnorm(vector: np.ndarray, p: float) -> float:
     
     return norm_sum**(1/p)
 
-def test_vector2norm(student_sol: callable, master_sol: callable, shouldprint: bool = False) -> bool:
+def test_vector_norm(student_sol: callable, master_sol: callable, shouldprint: bool = True) -> bool:
     """
-    Unit test function to see if the student solution for 'vector2norm' is correct.
+    Unit test function to see if the student solution for 'vector2norm' or 'vectorInfnorm' is correct.
 
     Parameters:
     - ``student_sol`` (callable): The student's solution function.
@@ -125,3 +125,54 @@ def test_vector2norm(student_sol: callable, master_sol: callable, shouldprint: b
 
     print("Passed tests: ", passed_tests, " out of 10")
     return passed_tests == 10
+
+
+def test_vectorPnorm(student_sol: callable, master_sol: callable, shouldprint: bool = True) -> bool:
+    """
+    Unit test function to see if the student solution for 'vectorPnorm' is correct.
+
+    Parameters:
+    - ``student_sol`` (callable): The student's solution function.
+    - ``master_sol`` (callable): The master solution function.
+    - ``shouldprint`` (bool): Flag to print the test results.
+
+    Returns:
+    bool: The test result.
+    """
+
+    vectors = [
+        np.array([1, 2, 3, 4, 5]),
+        np.array([0, 0, 0, 0, 0]),
+        np.array([1, 1, 1, 1, 1]),
+        np.array([1, 0, 1, 0, 1]),
+        np.array([0, 1, 0, 1, 0]),
+        np.array([2, 4, 3.5, 2, 1.5]),
+        np.array([-1, -2, -3, -4, -5]),
+        np.array([1, -2, 3, -4, 5]),
+        np.array([1.5, 2.5, 3.5, 4.5, 5.5]),
+        np.array([1, 1, 1, 1, 100])
+    ]
+    p_values = [1, 2, 3, 4, 5]
+    passed_tests = 0
+    one_incorrect = False
+    for i, v in enumerate(vectors):
+        for p in p_values:
+            try: 
+                student_result = student_sol(v, p)
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                continue
+
+            master_result = master_sol(v, p)
+            correct_answer = master_result == student_result
+
+            if shouldprint and not correct_answer and not one_incorrect: 
+                print("Error in vector ", i, ": ", v, " with p = ", p)
+                print("Student's result: ", student_result)
+                print("Expected result: ", master_result)
+                one_incorrect = True
+
+            passed_tests += 1 if correct_answer else 0
+
+    print("Passed tests: ", passed_tests, " out of 10")
+    return passed_tests == 50
