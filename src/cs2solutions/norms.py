@@ -341,7 +341,7 @@ def test_matrixPnorm(student_sol: callable, master_sol: callable, shouldprint: b
             correct_answer = master_result == student_result
 
             if shouldprint and not correct_answer and not one_incorrect: 
-                print("Error in vector ", i, ": ", m, " with p = ", p)
+                print("Error in matrix ", i, ": ", m, " with p = ", p)
                 print("Student's result: ", student_result)
                 print("Expected result: ", master_result)
                 one_incorrect = True
@@ -350,3 +350,123 @@ def test_matrixPnorm(student_sol: callable, master_sol: callable, shouldprint: b
 
     print("Passed tests: ", passed_tests, " out of 50")
     return passed_tests == 50
+
+def sol_signalInfnorm(x: np.ndarray) -> float:
+    return np.max(np.abs(x))
+
+def sol_signal1norm(x: np.ndarray) -> float:
+    return np.sum(np.abs(x))
+
+def sol_signal2norm(x: np.ndarray) -> float:
+    return np.sqrt(np.sum(np.abs(x)**2))
+
+def sol_bauerfike(L: np.ndarray, delL: np.ndarray) -> float:
+    """
+    Calculate $min(||L||_1 ||L^{-1}||_1 \cdot ||\Delta L||_1, ||L||_{\infty} ||L^{-1}||_{\infty} \cdot ||\Delta L||_{\infty})$ 
+
+    Parameters:
+    - L (np.ndarray): The original matrix.
+    - delL (np.ndarray): The perturbation matrix.
+
+    Returns:
+    -> float: The deviation value.
+    """
+
+    if L is None or delL is None or not isinstance(L, np.ndarray) or not isinstance(delL, np.ndarray):
+        raise ValueError("Input matrices are invalid")
+    if L.shape != delL.shape:
+        raise ValueError("Input matrices must be of the same shape")
+
+    norm1 = sol_matrixPnorm(L, 1) * sol_matrixPnorm(np.linalg.inv(L), 1) * sol_matrixPnorm(delL, 1)
+    normInf = sol_matrixInfnorm(L) * sol_matrixInfnorm(np.linalg.inv(L)) * sol_matrixInfnorm(delL)
+    return min(norm1, normInf)
+
+def sol_maxinputdir(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Find the input and output direction corresponding to the largest singular value.
+
+    Parameters:
+    - A (np.ndarray): The input matrix.
+
+    Returns:
+    -> Tuple[np.ndarray, float, np.ndarray]: The input direction, the largest singular value, and the output direction.
+    """
+
+    U, S, Vt = np.linalg.svd(A)
+    max_index = np.argmax(S)
+    
+    input_dir = Vt[max_index]
+    max_singular_value = S[max_index]
+    output_dir = U[max_index]
+
+    return input_dir, max_singular_value, output_dir
+
+def subplot_svd(A: np.ndarray, i: np.ndarray, j: np.ndarray, k: np.ndarray, dir: np.ndarray = None) -> None:
+    fig1 = plt.figure(figsize=(5, 5))
+    ax1 = fig1.add_subplot(111, projection='3d')
+    ax1.quiver(0, 0, 0, i[0], i[1], i[2], color='k', label='i (1,0,0)')
+    ax1.quiver(0, 0, 0, j[0], j[1], j[2], color='k', label='j (0,1,0)')
+    ax1.quiver(0, 0, 0, k[0], k[1], k[2], color='k', label='k (0,0,1)')
+    if dir is not None:
+        ax1.quiver(0, 0, 0, dir[0], dir[1], dir[2], color='r', label='Input direction')
+
+    # Generate points on the unit sphere
+    u = np.linspace(0, 2 * np.pi, 100)
+    v = np.linspace(0, np.pi, 50)
+    x = np.outer(np.cos(u), np.sin(v))
+    y = np.outer(np.sin(u), np.sin(v))
+    z = np.outer(np.ones_like(u), np.cos(v))
+
+    # Rotate and translate points to align with the given vectors
+    transform_matrix = np.vstack((i, j, k))
+    points = np.vstack((x.flatten(), y.flatten(), z.flatten())).T
+    transformed_points = np.dot(points, transform_matrix)
+
+    ax1.plot_surface(transformed_points[:, 0].reshape(x.shape),
+                    transformed_points[:, 1].reshape(y.shape),
+                    transformed_points[:, 2].reshape(z.shape),
+                    alpha=0.5)
+
+    # Set the aspect ratio of the axes to be equal
+    ax1.set_box_aspect([np.ptp(transformed_points[:, 0]), np.ptp(transformed_points[:, 1]), np.ptp(transformed_points[:, 2])])
+
+    ax1.set_xlabel('X')
+    ax1.set_ylabel('Y')
+    ax1.set_zlabel('Z')
+    plt.show()
+
+def plot_svd3x3(A: np.ndarray) -> None:
+    """
+    Plot the singular values of a matrix.
+
+    Parameters:
+    - A (np.ndarray): The input matrix.
+    """
+    if not isinstance(A, np.ndarray) or len(A.shape) != 2:
+        raise ValueError("Input must be a 2D numpy array")
+    
+    U, S, Vt = np.linalg.svd(A)
+    input_dir, max_singular_value, output_dir = sol_maxinputdir(A)
+
+    i = np.array([1, 0, 0])
+    j = np.array([0, 1, 0])
+    k = np.array([0, 0, 1])
+    subplot_svd(A, i, j, k, input_dir)
+
+    i = Vt@i
+    j = Vt@j
+    k = Vt@k
+    subplot_svd(A, i, j, k)
+
+    print(j)
+    i *= S[0]
+    j *= S[1]
+    k *= S[2]
+    print(S[1])
+    print(j)
+    subplot_svd(A, i, j, k)
+
+    i = U@i
+    j = U@j
+    k = U@k
+    subplot_svd(A, i, j, k, output_dir)
