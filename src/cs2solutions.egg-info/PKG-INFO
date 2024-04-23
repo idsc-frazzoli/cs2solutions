@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cs2solutions
-Version: 0.7.0
+Version: 0.7.4
 Summary: A package containing solutions for the CS2 lecture at ETH Zürich
 Author-email: Kalle Laitinen <klaitinen@ethz.ch>, Dejan Milojevic <dejanmi@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
 Maintainer-email: Kalle Laitinen <klaitinen@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
@@ -695,6 +695,8 @@ Requires-Dist: matplotlib
 Requires-Dist: numpy
 Requires-Dist: scipy
 Requires-Dist: sympy
+Requires-Dist: pandas
+Requires-Dist: ipympl
 
 # [cs2solutions]
 
