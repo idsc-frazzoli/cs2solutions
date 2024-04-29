@@ -7,15 +7,14 @@ packages = ["src/solutions"]
 
 [project]
 name = "cs2solutions"
-version = "0.7.4"
+version = "0.7.5"
 dependencies =[
     "control",
     "matplotlib",
     "numpy",
     "scipy",
     "sympy",
-    "pandas",
-    "ipympl"
+    "pandas"
 ]
 requires-python = ">=3.9"
 authors = [
