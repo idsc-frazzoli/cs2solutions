@@ -8,6 +8,7 @@ src/cs2solutions/cs2bot.py
 src/cs2solutions/decomp.py
 src/cs2solutions/discretization.py
 src/cs2solutions/duckiebot.py
+src/cs2solutions/inf_pkg.py
 src/cs2solutions/intro.py
 src/cs2solutions/intromimo.py
 src/cs2solutions/lqg.py
