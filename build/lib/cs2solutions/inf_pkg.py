@@ -70,7 +70,7 @@ def sol_is_stable(system: ct.TransferFunction) -> bool:
     Returns:
     - bool: Whether the system is stable
     """
-    return all(np.real(system.poles) < 0)
+    return all(np.real(system.poles()) < 0)
 
 def sol_small_gain_theorem(systems: list[ct.TransferFunction]) -> bool:
     """
@@ -99,5 +99,11 @@ def sol_internal_stability_check(toptf: ct.TransferFunction, bottomtf: ct.Transf
     Returns:
     - bool: Whether the internal stability condition is satisfied
     """
-    # First, create the overall transfer function
-    return False
+    P = toptf
+    K = bottomtf
+
+    M00 = 1/(1-K*P)
+    M01 = K/(1-K*P)
+    M10 = P/(1-P*K)
+    M11 = 1/(1-P*K)
+    return sol_is_stable(M00) and sol_is_stable(M01) and sol_is_stable(M10) and sol_is_stable(M11)
