@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: cs2solutions
-Version: 0.8.1
+Version: 0.9.0
 Summary: A package containing solutions for the CS2 lecture at ETH Zürich
-Author-email: Kalle Laitinen <klaitinen@ethz.ch>, Dejan Milojevic <dejanmi@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
+Author-email: Niclas Scheuer <nscheuer@ethz.ch>, Kalle Laitinen <klaitinen@ethz.ch>, Dejan Milojevic <dejanmi@ethz.ch>
 Maintainer-email: Kalle Laitinen <klaitinen@ethz.ch>, Niclas Scheuer <nscheuer@ethz.ch>
 License:                     GNU GENERAL PUBLIC LICENSE
                                Version 3, 29 June 2007

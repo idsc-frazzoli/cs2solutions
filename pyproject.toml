@@ -7,7 +7,7 @@ packages = ["src/solutions"]
 
 [project]
 name = "cs2solutions"
-version = "0.8.1"
+version = "0.9.0"
 dependencies =[
     "control",
     "matplotlib",
@@ -18,9 +18,9 @@ dependencies =[
 ]
 requires-python = ">=3.9"
 authors = [
+  { name="Niclas Scheuer", email="nscheuer@ethz.ch" },
   { name="Kalle Laitinen", email="klaitinen@ethz.ch" },
-  { name="Dejan Milojevic", email="dejanmi@ethz.ch" },
-  { name="Niclas Scheuer", email="nscheuer@ethz.ch" }
+  { name="Dejan Milojevic", email="dejanmi@ethz.ch" }
 ]
 maintainers = [
   { name="Kalle Laitinen", email="klaitinen@ethz.ch" },
