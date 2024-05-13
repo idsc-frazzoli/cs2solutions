@@ -500,7 +500,7 @@ def test_find_Y_inf(student_sol: callable, master_sol: callable, shouldprint: bo
             print(f"Master solution Y =: {master}")
         return False
 
-def assemble_suboptimal_K(A: np.ndarray, B_w: np.ndarray, B_u: np.ndarray, C_z: np.ndarray, C_y: np.ndarray, D_zw: np.ndarray, D_zu: np.ndarray, D_yw: np.ndarray, D_yu: np.ndarray, gamma: float) -> np.ndarray:
+def sol_assemble_suboptimal_K(A: np.ndarray, B_w: np.ndarray, B_u: np.ndarray, C_z: np.ndarray, C_y: np.ndarray, D_zw: np.ndarray, D_zu: np.ndarray, D_yw: np.ndarray, D_yu: np.ndarray, gamma: float) -> np.ndarray:
     """
     Returns the optimal state feedback gain for the given system and cost matrices
 
