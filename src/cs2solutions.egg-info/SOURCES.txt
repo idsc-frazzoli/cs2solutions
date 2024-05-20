@@ -2,6 +2,7 @@ LICENSE
 README.md
 pyproject.toml
 src/cs2solutions/H_inf.py
+src/cs2solutions/NLC.py
 src/cs2solutions/Qparam.py
 src/cs2solutions/__init__.py
 src/cs2solutions/aircraft.py
